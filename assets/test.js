@@ -6,6 +6,14 @@ $( document ).ready(function() {
 
 	var nextItem = 0;
 
+    var search_key = document.getElementById("search_key");
+
+    var submitButton = document.getElementById("submitButton");
+
+function submitClick() {
+    var firebase = firebase.database().ref();
+}
+
 jQuery.ajaxPrefilter(function(options) {
     if (options.crossDomain && jQuery.support.cors) {
         options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;

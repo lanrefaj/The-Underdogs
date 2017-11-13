@@ -45,7 +45,7 @@
 			</div>
 
 		</div>
-
+				
 		
 		<div class="row">
 			
@@ -83,7 +83,7 @@
 
 							<a class="btn btn-default text-muted" href="http://adminlte.dev/user/item" title="Clear"><i class="glyphicon glyphicon-remove"></i> </a>
 
-							<button id="submitButton" class="btn btn-info" type="submit">  Search  </button>
+							<button id="submitButton" class="btn btn-info" type="submit" onclick="submitclick()">  Search  </button>
 
 						</span>
 
@@ -152,11 +152,26 @@
 		
 	</div>
 
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBdBaKxOu6C2piPuA9vlZiopgTAvOtRtLU",
+    authDomain: "the-underdogs-webstorefront.firebaseapp.com",
+    databaseURL: "https://the-underdogs-webstorefront.firebaseio.com",
+    projectId: "the-underdogs-webstorefront",
+    storageBucket: "the-underdogs-webstorefront.appspot.com",
+    messagingSenderId: "546148526419"
+  };
+  firebase.initializeApp(config);
+</script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
 <script type="text/javascript" src="assets/webstorefront.js"></script>
 <script type="text/javascript" src="assets/test.js"></script>
+
 </body>
 </html>
