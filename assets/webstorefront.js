@@ -11,7 +11,6 @@ $( document ).ready(function() {
 	//	if (x == "") {
 		alert("Please enter a search value");
 		return false;
-		}
 	}
 
 	//	update code in HTML for text data only,update with ID name for Search function from Alex html, 		input a placeholder for populating error message in HTML and set id to placeHolderErr, 	review  
