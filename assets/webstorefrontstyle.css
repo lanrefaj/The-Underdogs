@@ -1,0 +1,162 @@
+#UnderdogsNav.NavHome {
+	min-width: 100px;
+	max-width: 100px;
+	text-align: center;
+}
+
+#UnderdogsNav.NavHeader strong {
+	display: none;
+}
+
+#UnderdogsNav.NavHome .NavHeader h2 {
+	display:none;
+}
+
+#UnderdogsNav.NavHome .NavHeader strong {
+	display: block;
+}
+s
+#UnderdogsNav ul li a {
+	text-align: left;
+}
+
+#UnderdogsNav.NavHome ul li a {
+	padding: 30px 15px;
+	text-align: center;
+	font-size: 1em;
+}
+
+#UnderdogsNav.NavHome ul li a i {
+	margin-right: 0;
+	display: block;
+	font-size: 1.8em;
+	margin-bottom: 5px;
+}
+
+#UnderdogsNav.NavHome ul a {
+	padding: 10px !important;
+}
+
+#UnderdogsNav.NavHome a[aria-expanded="false"]::before, #UnderdogsNav.NavHome a[aria-expanded="true"]::before {
+	top: auto;
+	bottom: 5px;
+	right: 50%;
+	transform: translateX(50%);
+}
+
+a.ButtonClass {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+}
+
+#myFooter{
+    padding-top:32px;
+}
+
+#myFooter .container{
+    text-align: center;
+}
+
+#myFooter .footer-copyright{
+    margin-bottom: 35px;
+    text-align: center;
+    color: #777;
+}
+
+#myFooter ul{
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 18px;
+}
+
+#myFooter a{
+    color: #282b2d;
+    font-size: 18px;
+}
+
+#myFooter li{
+    display: inline-block;
+    margin: 0px 15px;
+    line-height: 2;
+}
+
+#myFooter .footer-social{
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background-color: #eee;
+}
+
+#myFooter .fa{
+    font-size: 36px;
+    margin-right: 15px;
+    margin-left: 20px;
+    background-color: white;
+    color: #d0d0d0;
+    border-radius: 51%;
+    padding: 10px;
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    line-height: 43px;
+    text-decoration: none;
+    transition:color 0.2s;
+}
+
+#myFooter .fa-facebook:hover{
+   color: #2b55ff;
+}
+
+#myFooter .fa-facebook:focus{
+    color: #2b55ff; 
+}
+
+#myFooter .fa-google-plus:hover{
+    color:red;
+}
+
+#myFooter .fa-google-plus:focus{
+    color:red;
+}
+
+#myFooter .fa-twitter:hover{
+    color: #00aced;
+
+}
+
+#myFooter .fa-twitter:focus{
+    color:#00aced;
+}
+
+/* CSS used for positioning the footers at the bottom of the page. */
+/* You can remove this. */
+
+html{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    height: 100%;
+}
+
+.content{
+   flex: 1 0 auto;
+   -webkit-flex: 1 0 auto;
+   min-height: 200px;
+}
+
+#myFooter{
+   flex: 0 0 auto;
+   -webkit-flex: 0 0 auto;
+}
+
+
+

@@ -6,7 +6,9 @@
 	<head>
 	<title>The Underdogs</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
- 	<link rel="stylesheet" type="text/css" href="assets/style.css">
+ 	<link rel="stylesheet" type="text/css" href="./assets/webstorefrontstyle.css">
+ 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 	</head>
 	<!---BELOW IS CODE CONTAINER WHERE WE WILL PUT VARIOUS SCRIPTS FOR JQUERY AJAX FIREBASE ETC
 	-->
@@ -46,6 +48,62 @@
 
 		</div>
 
+		<div class="wrapper">
+
+        <nav id="sidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <h3>Collapsible Sidebar</div>
+                <strong>BS</strong>
+            </div>
+
+            <!-- Sidebar Links -->
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="glyphicon glyphicon-briefcase"></i>
+                        About
+                    </a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-duplicate"></i>
+                        Pages
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li><a href="#">Page 1</a></li>
+                        <li><a href="#">Page 2</a></li>
+                        <li><a href="#">Page 3</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="glyphicon glyphicon-link"></i>
+                        Portfolio
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="glyphicon glyphicon-send"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                <i class="glyphicon glyphicon-align-left"></i>
+                Toggle Sidebar
+            </button>
+        <div>
+
+</div>
+				
 		
 		<div class="row">
 			
@@ -83,7 +141,7 @@
 
 							<a class="btn btn-default text-muted" href="http://adminlte.dev/user/item" title="Clear"><i class="glyphicon glyphicon-remove"></i> </a>
 
-							<button id="submitButton" class="btn btn-info" type="submit">  Search  </button>
+							<button id="submitButton" class="btn btn-info" type="submit" onclick="submitclick()">  Search  </button>
 
 						</span>
 
@@ -133,30 +191,39 @@
 			<div class="col-md-1"></div>
 
 		</div>
-		
-		<div class="row">
 
-			<div class="col-md-12">
-				
-				<footer class="text-center">
-					
-					<p> Shopping Made Easy!!!!! </p>
-
-				</footer>
-
-
-			</div>
-	
-		</div>
-
-		
+	<div class="content">
 	</div>
+	    <footer id="myFooter">
+	        <div class="container">
+	            <ul>
+	                <li><a href="#">Company Information</a></li>
+	                <li><a href="#">Contact us</a></li>
+	                <li><a href="#">Reviews</a></li>
+	                <li><a href="#">Terms of service</a></li>
+	            </ul>
+	        <p class="footer-copyright">© 2016 Copyright Text</p>
+	        </div>
+	        <div class="footer-social">
+	            <a href="#" class="social-icons"><i class="fa fa-facebook"></i></a>
+	            <a href="#" class="social-icons"><i class="fa fa-google-plus"></i></a>
+	            <a href="#" class="social-icons"><i class="fa fa-twitter"></i></a>
+	        </div>
+	    </footer>
 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
 <script type="text/javascript" src="assets/webstorefront.js"></script>
 <script type="text/javascript" src="assets/test.js"></script>
+
+
+
+
 </body>
 </html>

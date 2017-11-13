@@ -6,6 +6,23 @@ $( document ).ready(function() {
 
 	var nextItem = 0;
 
+    var search_key = document.getElementById("search_key");
+
+    var submitButton = document.getElementById("submitButton");
+
+    var config = {
+    apiKey: "AIzaSyBdBaKxOu6C2piPuA9vlZiopgTAvOtRtLU",
+    authDomain: "the-underdogs-webstorefront.firebaseapp.com",
+    databaseURL: "https://the-underdogs-webstorefront.firebaseio.com",
+    projectId: "the-underdogs-webstorefront",
+    storageBucket: "the-underdogs-webstorefront.appspot.com",
+    messagingSenderId: "546148526419"
+    };
+    firebase.initializeApp(config);
+ 
+    var database = firebase.database();
+
+
 jQuery.ajaxPrefilter(function(options) {
     if (options.crossDomain && jQuery.support.cors) {
         options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
@@ -34,8 +51,6 @@ function getItems(searchItem,productStore,nextItem) {
  	default:
  	getWalmartItems(searchItem,nextItem);
  }
-
-
 
 }
 
@@ -71,7 +86,9 @@ function getWalmartItems(searchItem,nextItem){
 
         	var description = $("<p>").text("Description: " + results[i].longDescription);
 
-        	var url = $("<a>").text("URL: " + results[i].productUrl);
+        	var url = $("<a>").text("Buy Here");
+
+            url.attr("class", "ButtonClass")
 
         	url.attr("href", results[i].productUrl)
 
@@ -89,27 +106,19 @@ function getWalmartItems(searchItem,nextItem){
 
             walmartSearchDiv.append(walmartProductImage);
 
-            walmartSearchDiv.append(description);
+            //walmartSearchDiv.append(description);
 
-            walmartSearchDiv.append(salePrice);
+            //walmartSearchDiv.append(salePrice);
 
-            walmartSearchDiv.append(rating);
+            //walmartSearchDiv.append(rating);
 
             walmartSearchDiv.append(url);
 
 			$("#resultsGoHere").prepend(walmartSearchDiv);
 
-
-
 		}        
 
-
-
         });
-
-
-
-
 
 }
 
@@ -174,27 +183,11 @@ searchItem = searchItem.replace(' ', '&search=');
 
 		$("#resultsGoHere").prepend(bestbuySearchDiv);
 
-
-
-
-
 	}
-
-
-
 
 });
 
-
-
-
-
 }
-
-
-
-
-
 
   $(document).on("click", "#submitButton",  function() {
 
@@ -208,17 +201,10 @@ searchItem = searchItem.replace(' ', '&search=');
 
        getItems(searchItem, productStore, nextItem);
 
-       
+  // Initialize Firebase
+    
+      database.ref("/searches/" + searchItem).set({search: searchItem})
 
 });
-
-
-
-
-
-
-
-
-
 
 });
