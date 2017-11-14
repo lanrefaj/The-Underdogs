@@ -226,6 +226,8 @@ $(document).ready(function() {
 
         event.preventDefault();
 
+        $("#resultsGoHere").empty();
+
         validateInput();
 
         if (!validInput) {
