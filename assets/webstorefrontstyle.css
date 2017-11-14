@@ -158,5 +158,8 @@ body{
    -webkit-flex: 0 0 auto;
 }
 
-
+div.item{
+    height: 400px;
+    overflow: auto;
+}
 

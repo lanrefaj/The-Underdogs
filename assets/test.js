@@ -1,210 +1,253 @@
-$( document ).ready(function() {
+$(document).ready(function() {
 
-	var searchItem = "";
+    var searchItem = "";
 
-	var productStore = "";
+    var productStore = "";
 
-	var nextItem = 0;
+    var nextItem = 0;
 
     var search_key = document.getElementById("search_key");
 
     var submitButton = document.getElementById("submitButton");
 
     var config = {
-    apiKey: "AIzaSyBdBaKxOu6C2piPuA9vlZiopgTAvOtRtLU",
-    authDomain: "the-underdogs-webstorefront.firebaseapp.com",
-    databaseURL: "https://the-underdogs-webstorefront.firebaseio.com",
-    projectId: "the-underdogs-webstorefront",
-    storageBucket: "the-underdogs-webstorefront.appspot.com",
-    messagingSenderId: "546148526419"
+        apiKey: "AIzaSyBdBaKxOu6C2piPuA9vlZiopgTAvOtRtLU",
+        authDomain: "the-underdogs-webstorefront.firebaseapp.com",
+        databaseURL: "https://the-underdogs-webstorefront.firebaseio.com",
+        projectId: "the-underdogs-webstorefront",
+        storageBucket: "the-underdogs-webstorefront.appspot.com",
+        messagingSenderId: "546148526419"
     };
     firebase.initializeApp(config);
- 
+
     var database = firebase.database();
 
 
-jQuery.ajaxPrefilter(function(options) {
-    if (options.crossDomain && jQuery.support.cors) {
-        options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    jQuery.ajaxPrefilter(function(options) {
+        if (options.crossDomain && jQuery.support.cors) {
+            options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+        }
+    });
+
+    $('.search-panel .dropdown-menu').find('a').click(function(e) {
+        e.preventDefault();
+        var param = $(this).attr("href").replace("#", "");
+        var concept = $(this).text();
+        $('.search-panel span#search_concept').text(concept);
+        $('.input-group #search_param').val(param);
+    });
+
+    function decodeDescription(str) {
+        var elem = document.createElement('textarea');
+        elem.innerHTML = str;
+        return elem.value;
     }
-});
 
- $('.search-panel .dropdown-menu').find('a').click(function(e) {
-		e.preventDefault();
-		var param = $(this).attr("href").replace("#","");
-		var concept = $(this).text();
-		$('.search-panel span#search_concept').text(concept);
-		$('.input-group #search_param').val(param);
-	});
+    function validateInput() {
+        var validateItem = $("#search_key").val().trim();
+        if (!validateItem.length) {
+            errorMsg = $('<p class="alert alert-danger">').text("Error: Search text cannot be empty.");
+            validInput = false;
+        } else {
+            if (validateItem.match(/[<>.&+?^$#{}()|[\]\\]/g) !== null) {
+                errorMsg = $('<p class="alert alert-danger">').text("Error: Search text contains invalid characters.");
+                validInput = false;
+            } else {
+                validInput = true;
+            }
+        }
+    }
 
-function getItems(searchItem,productStore,nextItem) {
- 
- switch(productStore){
- 	case "bestbuy":
- 	getBestbuyItems(searchItem,nextItem);
- 	break;
+    function getItems(searchItem, productStore, nextItem) {
 
- 	case "walmart":
- 	getWalmartItems(searchItem,nextItem);
- 	break;
+        switch (productStore) {
+            case "bestbuy":
+                getBestbuyItems(searchItem, nextItem);
+                break;
 
- 	default:
- 	getWalmartItems(searchItem,nextItem);
- }
+            case "walmart":
+                getWalmartItems(searchItem, nextItem);
+                break;
 
-}
+            default:
+                getWalmartItems(searchItem, nextItem);
+        }
 
-function getWalmartItems(searchItem,nextItem){
- 
-	searchItem = searchItem.replace(' ', '+');
+    }
 
- 	var walmartSeachApi = "http://api.walmartlabs.com/v1/search?query=" + searchItem + "&format=json&apiKey=hr27d9nbvt6ysz58fchv9nuz"
+    function getWalmartItems(searchItem, nextItem) {
+
+        searchItem = searchItem.replace(' ', '+');
+
+        var walmartSeachApi = "http://api.walmartlabs.com/v1/search?query=" + searchItem + "&format=json&apiKey=hr27d9nbvt6ysz58fchv9nuz"
 
         console.log(walmartSeachApi);
 
         $.ajax({
-          url: walmartSeachApi,
-          method: "GET"
-        })
+                url: walmartSeachApi,
+                method: "GET"
+            })
 
-        .done(function(response){
+            .done(function(response) {
 
-        	console.log(response);
-        	var results = response.items;
+                console.log(response);
+                var results = response.items;
 
-        console.log(JSON.stringify(results));
-        
-         $("#resultsGoHere").empty();
+                console.log(JSON.stringify(results));
 
-        for (var i = 0; i < results.length; i++) {
+                $("#resultsGoHere").empty();
 
-         var walmartSearchDiv = $("<div class='item'>");
-            
-        	var name = $("<p>").text("Name: " + results[i].name);
+                for (var i = 0; i < results.length; i++) {
 
-        	var salePrice = $("<p>").text("Sale Price: $" + results[i].salePrice);
+                    var walmartSearchDiv = $("<div class='item well col-md-6'>");
 
-        	var description = $("<p>").text("Description: " + results[i].longDescription);
+                    var name = $("<p>").text(results[i].name);
 
-        	var url = $("<a>").text("Buy Here");
+                    var salePrice = $("<p>").text("Sale Price: $" + results[i].salePrice);
 
-            url.attr("class", "ButtonClass")
+                    var descriptionText = decodeDescription(results[i].longDescription);
 
-        	url.attr("href", results[i].productUrl)
+                    var url = $("<a>").text("Buy Here");
 
-        	var rating = $("<p>").text("Rating: " + results[i].customerRating);
+                    url.attr("class", "ButtonClass");
 
-        	//c = _.unescape(c);
+                    url.attr("href", results[i].productUrl)
 
-        	//console.log(c.toString());
+                    var rating = $("<p>").text("Rating: " + parseFloat(results[i].customerRating).toFixed(1));
 
-            var walmartProductImage = $("<img>");
-            
-            walmartProductImage.attr("src", results[i].mediumImage);	
 
-            walmartSearchDiv.append(name);
+                    var walmartProductImage = $("<img>");
 
-            walmartSearchDiv.append(walmartProductImage);
+                    walmartProductImage.attr("src", results[i].mediumImage);
 
-            //walmartSearchDiv.append(description);
+                    walmartSearchDiv.append(name);
 
-            //walmartSearchDiv.append(salePrice);
+                    walmartSearchDiv.append($("<br>"));
 
-            //walmartSearchDiv.append(rating);
+                    walmartSearchDiv.append(walmartProductImage);
 
-            walmartSearchDiv.append(url);
+                    walmartSearchDiv.append($("<br>"));
 
-			$("#resultsGoHere").prepend(walmartSearchDiv);
+                    walmartSearchDiv.append(descriptionText);
 
-		}        
+                    walmartSearchDiv.append(salePrice);
 
-        });
+                    walmartSearchDiv.append(rating);
 
-}
+                    walmartSearchDiv.append(url);
 
-function getBestbuyItems(searchItem,nextItem){
+                    walmartSearchDiv.append($("<br>"));
 
-searchItem = searchItem.replace(' ', '&search=');
+                    $("#resultsGoHere").prepend(walmartSearchDiv);
+
+                }
+
+            });
+
+    }
+
+    function getBestbuyItems(searchItem, nextItem) {
+
+        searchItem = searchItem.replace(' ', '&search=');
 
         var bestbuySearchApi = "https://api.bestbuy.com/v1/products((search=" + searchItem + "))?apiKey=5ReGnRKGq2prXr05cc8d23cg&sort=customerReviewAverage.asc&show=customerReviewAverage,description,image,longDescription,mobileUrl,name,regularPrice,salePrice,shortDescription,thumbnailImage,url&format=json";
 
         console.log(bestbuySearchApi);
 
         $.ajax({
-		url: bestbuySearchApi,
-		method: "GET"
+                url: bestbuySearchApi,
+                method: "GET"
 
 
-		})
+            })
 
 
 
-	.done(function(response){
+            .done(function(response) {
 
-	console.log(response);
+                console.log(response);
 
-	var results = response.products;
+                var results = response.products;
 
-	console.log(JSON.stringify(results));
+                console.log(JSON.stringify(results));
 
-	 $("#resultsGoHere").empty();
+                $("#resultsGoHere").empty();
 
-	for (var i = 0; i < results.length; i++) {
+                for (var i = 0; i < results.length; i++) {
 
-		var bestbuySearchDiv = $("<div class='item'>");
+                    var bestbuySearchDiv = $("<div class='item well col-md-6'>");
 
-		var name = $("<p>").text("Name: " + results[i].name);
+                    var name = $("<p>").text(results[i].name);
 
-		var salePrice = $("<p>").text("Price: $" + results[i].regularPrice);
+                    var salePrice = $("<p>").text("Price: $" + results[i].regularPrice);
 
-		var description = $("<p>").text("Description: " + results[i].longDescription);
+                    var descriptionText = decodeDescription(results[i].longDescription);
 
-		var url = $("<a>").text("URL: " + results[i].url);
+                    var url = $("<a>").text("Buy Here");
 
-		url.attr("href", results[i].url);
+                    url.attr("class", "ButtonClass");
 
-		var rating = $("<p>").text("Rating: " + results[i].customerReviewAverage);
+                    url.attr("href", results[i].url);
 
-		var bestbuyProductImage = $("<img>");
+                    var rating = $("<p>").text("Rating: " + parseFloat(results[i].customerReviewAverage).toFixed(1));
 
-		bestbuyProductImage.attr("src", results[i].thumbnailImage);
 
-		bestbuySearchDiv.append(name);
+                    var bestbuyProductImage = $("<img>");
 
-		bestbuySearchDiv.append(bestbuyProductImage);
+                    bestbuyProductImage.attr("src", results[i].thumbnailImage);
 
-		bestbuySearchDiv.append(description);
+                    bestbuySearchDiv.append(name);
 
-		bestbuySearchDiv.append(salePrice);
+                    bestbuySearchDiv.append($("<br>"));
 
-		bestbuySearchDiv.append(rating);
+                    bestbuySearchDiv.append(bestbuyProductImage);
 
-		bestbuySearchDiv.append(url);
+                    bestbuySearchDiv.append($("<br>"))
 
-		$("#resultsGoHere").prepend(bestbuySearchDiv);
+                    bestbuySearchDiv.append(descriptionText);
 
-	}
+                    bestbuySearchDiv.append(salePrice);
 
-});
+                    bestbuySearchDiv.append(rating);
 
-}
+                    bestbuySearchDiv.append(url);
 
-  $(document).on("click", "#submitButton",  function() {
+                    bestbuySearchDiv.append($("<br>"));
 
-  		event.preventDefault();
-        
-  		productStore = $("#search_param").val();
+                    $("#resultsGoHere").prepend(bestbuySearchDiv);
 
-        searchItem = $("#search_key").val().trim();
+                }
 
-        console.log(searchItem);
+            });
 
-       getItems(searchItem, productStore, nextItem);
+    }
 
-  // Initialize Firebase
-    
-      database.ref("/searches/" + searchItem).set({search: searchItem})
+    $(document).on("click", "#submitButton", function() {
 
-});
+        event.preventDefault();
+
+        validateInput();
+
+        if (!validInput) {
+            $("#resultsGoHere").append(errorMsg);
+        } else {
+
+            productStore = $("#search_param").val();
+
+            searchItem = $("#search_key").val().trim();
+
+            console.log(searchItem);
+
+            getItems(searchItem, productStore, nextItem);
+
+        }
+
+        // Initialize Firebase
+
+        database.ref("/searches/" + searchItem).set({
+            search: searchItem
+        })
+
+    });
 
 });
